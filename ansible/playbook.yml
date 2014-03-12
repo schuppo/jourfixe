@@ -25,10 +25,22 @@
   - name: get .dotfiles
     git: repo=https://github.com/schuppo/dotfiles.git dest=/home/vagrant/.dotfiles
     ignore_errors: True
-  - file: path=/home/vagrant/.dotfiles state=directory owner=vagrant group=vagrant mode=0750 recurse=yes
+
+  - name:  .dotfiles
+    file: path=/home/vagrant/.dotfiles state=directory owner=vagrant group=vagrant mode=0750 recurse=yes
+
+  - name: bootstrap .dotfiles
+    shell: creates=/home/vagrant/.vimrc chdir=/home/vagrant/.dotfiles ./script/bootstrap <<< $'schuppo\noliver.schupp@yahoo.de\nO\n'
 
   - name: use zsh as default shell
     command: chsh -s /bin/zsh vagrant
+
+  # sympa
+  - name: create src directory
+    command: mkdir /vagrant/ansible/src creates=/vagrant/ansible/src
+
+  - name: download sympa if not present
+    shell: chdir=/vagrant/ansible/src creates=sympa-6.1.19.tar.gz wget http://www.sympa.org/distribution/sympa-6.1.19.tar.gz
 
   # - name: install language packs for locale support
   #   apt: name={{ item }} state=latest
@@ -61,7 +73,7 @@
     yum: name=httpd state=present
 
   - name: make sure apache is running
-    action: service name=httpd state=started enabled=true
+    service: name=httpd state=started enabled=true
 
   # - copy: src=/vagrant/ansible/templates/site.conf dest=/etc/httpd/sites-enabled/site.conf
   #   notify: restart apache
@@ -86,7 +98,7 @@
       - mysql-server
 
   - name: make sure mysqld is running
-    action: service name=mysqld state=started enabled=true
+    service: name=mysqld state=started enabled=true
 
   - name: add mysql user
     mysql_user: name=vagrant
@@ -209,10 +221,10 @@
 
   handlers:
     - name: restart apache
-      action: service name=httpd state=restarted
+      service: name=httpd state=restarted
   #   - name: restart mysql
-  #     action: service name=mysql state=restarted
+  #     service: name=mysql state=restarted
   #   # - name: reload queue listener
-  #   #   action: supervisorctl name=queue_listen state=restarted
+  #   #   supervisorctl name=queue_listen state=restarted
   #   - name: restart beanstalkd
-  #     action: service name=beanstalkd state=restarted
+  #     service: name=beanstalkd state=restarted
