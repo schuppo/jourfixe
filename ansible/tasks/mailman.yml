@@ -1,0 +1,13 @@
+---
+-
+  name: install
+  yum: name=mailman state=present
+-
+  name: copy config files
+  copy: src=/vagrant/ansible/templates/mailman.conf
+        dest=/etc/httpd/conf.d/mailman.conf
+        owner=root group=root mode=0660
+  notify: apache restart
+-
+  name: set password
+  shell: /usr/lib/mailman/bin/mmsitepass

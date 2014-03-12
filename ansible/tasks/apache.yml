@@ -1,0 +1,29 @@
+---
+-
+  name: ensure apache is installed
+  yum: name=httpd state=present
+
+-
+  name: make sure apache is running
+  service: name=httpd state=started enabled=true
+
+  # - copy: src=/vagrant/ansible/templates/site.conf dest=/etc/httpd/sites-enabled/site.conf
+  #   notify: restart apache
+
+  # - file: path=/etc/httpd/sites-enabled/000-default.conf state=absent
+  #   notify: restart apache
+
+-
+  file: path=/etc/httpd/conf.d state=directory
+
+-
+  copy: src=/vagrant/ansible/templates/fqdn.conf dest=/etc/httpd/conf.d/fqdn.conf
+  notify: restart apache
+
+-
+  copy: src=/vagrant/ansible/templates/httpd.conf dest=/etc/httpd/conf/httpd.conf
+  notify: restart apache
+
+-
+  copy: src=/vagrant/ansible/templates/nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
+  notify: restart apache

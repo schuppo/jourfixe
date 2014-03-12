@@ -1,0 +1,17 @@
+---
+-
+  name: get .dotfiles
+  git: repo=https://github.com/schuppo/dotfiles.git dest=/home/vagrant/.dotfiles
+  ignore_errors: True
+
+-
+  name:  .dotfiles
+  file: path=/home/vagrant/.dotfiles state=directory owner=vagrant group=vagrant
+
+-
+  name: bootstrap .dotfiles
+  shell: creates=/home/vagrant/.vimrc chdir=/home/vagrant/.dotfiles ./script/bootstrap <<< $'schuppo\noliver.schupp@yahoo.de\nO\n'
+
+-
+  name: use zsh as default shell
+  command: chsh -s /bin/zsh vagrant
