@@ -20,6 +20,11 @@
   file: path=/etc/httpd/conf.d state=directory
 
 -
+  file: path=/var/www/sites
+        state=directory
+        owner=vagrant
+        group=vagrant
+-
   copy: src=/vagrant/ansible/templates/fqdn.conf dest=/etc/httpd/conf.d/fqdn.conf
   notify: restart apache
 

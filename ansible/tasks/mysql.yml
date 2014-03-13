@@ -9,30 +9,6 @@
 -
   name: make sure mysqld is running
   service: name=mysqld state=started enabled=true
-
--
-  name: add mysql user
-  mysql_user: name=vagrant
-              host={{ item }}
-              password=vagrant priv=*.*:ALL,GRANT
-              login_user=root
-              login_password=
-  with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
-
--
-  name: create mysql databases
-  mysql_db: name={{ item }}
-            state=present
-  with_items:
-    - site_development
-    - site_development_stats
-    - site_testing
-    - site_testing_stats
-
 -
   file: path=/etc/mysql/conf.d state=directory
 # - name: Set MySQL number of connections

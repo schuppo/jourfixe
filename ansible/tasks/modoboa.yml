@@ -11,8 +11,9 @@
     - modoboa
 -
   name: run modoboa
-  shell:    modoboa-admin.py deploy modoboa_01 --syncdb --collectstatic --with-amavis --dburl mysql://modoboa:modoboa@localhost/modoboa --amavis_dburl mysql://amavis:amavis@localhost/amavis --domain localhost
-            chdir=/var/local
+  shell:    modoboa-admin.py deploy modoboa_server --syncdb --collectstatic --with-amavis --dburl mysql://modoboa:modoboa@localhost/modoboa --amavis_dburl mysql://amavis:amavis@localhost/amavis --domain localhost
+            chdir=/var/www/sites
+  sudo: False
 -
   name: create mysql user
   mysql_user: name=modoboa
@@ -25,3 +26,11 @@
     - 127.0.0.1
     - ::1
     - localhost
+-
+  name: install mod_wsgi for apache if not present
+  yum: name=mod_wsgi state=present
+-
+  name: copy modoboa-server.conf
+  copy: src=/vagrant/ansible/templates/modoboa-server.conf
+        dest=/etc/httpd/conf.d/
+  notify: restart apache
