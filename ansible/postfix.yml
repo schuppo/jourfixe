@@ -1,0 +1,6 @@
+---
+-
+  hosts: all
+  sudo: true
+  tasks:
+    - include: tasks/postfix.yml

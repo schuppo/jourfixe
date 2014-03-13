@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+    - include: tasks/mailman.yml
+  handlers:
+    - include: handlers/handlers.yml

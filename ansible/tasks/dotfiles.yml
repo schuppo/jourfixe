@@ -1,16 +1,24 @@
 ---
 -
-  name: get .dotfiles
-  git: repo=https://github.com/schuppo/dotfiles.git dest=/home/vagrant/.dotfiles
+  name: get .dotfiles from github repo
+  git:  repo=https://github.com/schuppo/dotfiles.git
+        dest=/home/vagrant/.dotfiles
+        #accept_hostkey=yes #added in ansible 1.5
   ignore_errors: True
+  sudo: False
 
--
-  name:  .dotfiles
-  file: path=/home/vagrant/.dotfiles state=directory owner=vagrant group=vagrant
+# -
+#   name:  change ownership of .dotfiles directory
+#   file: path=/home/vagrant/.dotfiles
+#         state=directory
+#         owner=vagrant
+#         group=vagrant
+#         recurse=true
 
 -
   name: bootstrap .dotfiles
-  shell: creates=/home/vagrant/.vimrc chdir=/home/vagrant/.dotfiles ./script/bootstrap <<< $'schuppo\noliver.schupp@yahoo.de\nO\n'
+  shell:    creates=/home/vagrant/.vimrc
+            chdir=/home/vagrant/.dotfiles ./script/bootstrap <<< $'vagrant\nO'
 
 -
   name: use zsh as default shell

@@ -1,13 +1,21 @@
 ---
 -
-  name: install
+  name: install mailman
   yum: name=mailman state=present
 -
-  name: copy config files
+  name: install postfix
+  yum: name=postfix state=present
+-
+  name: copy mailmain httpd config file
   copy: src=/vagrant/ansible/templates/mailman.conf
         dest=/etc/httpd/conf.d/mailman.conf
-        owner=root group=root mode=0660
-  notify: apache restart
+        owner=root group=root mode=0664
+  notify: restart apache
 -
-  name: set password
+  name: copy mailman config file
+  copy: src=/vagrant/ansible/templates/mm_cfg.py
+        dest=/usr/lib/mailman/Mailman
+        owner=root group=mailman mode=0644
+-
+  name: set mailman site password
   shell: /usr/lib/mailman/bin/mmsitepass

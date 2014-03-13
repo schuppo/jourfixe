@@ -1,0 +1,9 @@
+---
+- name: restart apache
+  action: service name=httpd state=restarted
+- name: restart mysql
+  service: name=mysql state=restarted
+  #   # - name: reload queue listener
+  #   #   supervisorctl name=queue_listen state=restarted
+  #   - name: restart beanstalkd
+  #     service: name=beanstalkd state=restarted

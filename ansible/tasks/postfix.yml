@@ -1,0 +1,11 @@
+---
+-
+  name: remove sendmail
+  yum: name=sendmail state=absent
+-
+  name: install postfix related packages
+  yum: name={{ item }} state=present
+  with_items:
+    - postfix
+    - dovecot
+

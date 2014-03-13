@@ -13,88 +13,81 @@
       - zsh
       - ctags
 
-#  - include: tasks/dotfiles.yml
+  - include: tasks/dotfiles.yml
 
-  # sympa
-  - name: create src directory
-    command: mkdir /vagrant/ansible/src creates=/vagrant/ansible/src
+  # # sympa
+  # - name: create src directory
+  #   command: mkdir /vagrant/ansible/src creates=/vagrant/ansible/src
 
-  - name: download sympa if not present
-    shell: chdir=/vagrant/ansible/src creates=sympa-6.1.19.tar.gz wget http://www.sympa.org/distribution/sympa-6.1.19.tar.gz
+  # - name: download sympa if not present
+  #   shell: chdir=/vagrant/ansible/src creates=sympa-6.1.19.tar.gz wget http://www.sympa.org/distribution/sympa-6.1.19.tar.gz
 
-  # SELinux python bindings for libselinux if not present
-  - name: install libselinux-python
-    yum: name=libselinux-python state=present
+  # # SELinux python bindings for libselinux if not present
+  # - name: install libselinux-python
+  #   yum: name=libselinux-python state=present
+
+  # # -
+  # #   include: tasks/apache.yml
+
+  # - name: create /var/www if not present
+  #   file: path=/var/www state=directory
+
+  # - name: create site symlink
+  #   file: src=/vagrant dest=/var/www/site state=link
+  #   notify: restart apache
+
+  # # -
+  # #   include: tasks/mysql.yml
+
+  # # -
+  # #   include: tasks/php.yml
 
   # -
-  #   include: tasks/apache.yml
+  #   include: tasks/mailman.yml
 
-  - name: create /var/www if not present
-    file: path=/var/www state=directory
+  # # # Assets compilation
 
-  - name: create site symlink
-    file: src=/vagrant dest=/var/www/site state=link
-    notify: restart apache
+  # # - name: install nodejs
+  # #   yum: name=nodejs state=latest
 
-  # -
-  #   include: tasks/mysql.yml
+  # # - name: install rubygems
+  # #   yum: name=rubygems state=present
 
-  # -
-  #   include: tasks/php.yml
+  # # - name: install compass
+  # #   command: gem install compass sass chunky_png fssm creates=/usr/local/bin/compass
 
-  -
-    include: tasks/mailman.yml
+  # # # Set up site
+  # # #
 
-  # # Assets compilation
-
-  # - name: install nodejs
-  #   yum: name=nodejs state=latest
-
-  # - name: install rubygems
-  #   yum: name=rubygems state=present
-
-  # - name: install compass
-  #   command: gem install compass sass chunky_png fssm creates=/usr/local/bin/compass
-
-  # # Set up site
-  # #
-
-  # - file: src=/vagrant dest=/var/www/site state=link
-  # - file: path={{ item }} owner=vagrant group=vagrant mode=0777 state=directory
-  #   with_items:
-  #     - /var/cache/site
-  #     - /var/cache/site/cache
-  #     - /var/cache/site/clockwork
-  #     - /var/cache/site/logs
-  #     - /var/cache/site/meta
-  #     - /var/cache/site/sessions
-  #     - /var/cache/site/views
+  # # - file: src=/vagrant dest=/var/www/site state=link
+  # # - file: path={{ item }} owner=vagrant group=vagrant mode=0777 state=directory
+  # #   with_items:
+  # #     - /var/cache/site
+  # #     - /var/cache/site/cache
+  # #     - /var/cache/site/clockwork
+  # #     - /var/cache/site/logs
+  # #     - /var/cache/site/meta
+  # #     - /var/cache/site/sessions
+  # #     - /var/cache/site/views
 
 
-  # # - name: install npm packages
-  # #   command: chdir=/var/www/site npm install --no-bin-links
-  # #   register: out
-  # #   changed_when: "out.stdout.strip() != ''"
-  # #   sudo: false
+  # # # - name: install npm packages
+  # # #   command: chdir=/var/www/site npm install --no-bin-links
+  # # #   register: out
+  # # #   changed_when: "out.stdout.strip() != ''"
+  # # #   sudo: false
 
-  # # - name: install composer packages
-  # #   command: chdir=/var/www/site bash pocket install
-  # #   register: out
-  # #   changed_when: "'Nothing to install or update' not in out.stdout"
-  # #   sudo: false
+  # # # - name: install composer packages
+  # # #   command: chdir=/var/www/site bash pocket install
+  # # #   register: out
+  # # #   changed_when: "'Nothing to install or update' not in out.stdout"
+  # # #   sudo: false
 
-  # # - name: set up artisan queue listen
-  # #   copy: src=/vagrant/ansible/templates/supervisor-queue-listen.conf dest=/etc/supervisor/conf.d/supervisor-queue-listen.conf
-  # #   notify: reload queue listener
+  # # # - name: set up artisan queue listen
+  # # #   copy: src=/vagrant/ansible/templates/supervisor-queue-listen.conf dest=/etc/supervisor/conf.d/supervisor-queue-listen.conf
+  # # #   notify: reload queue listener
 
-  # # Common stuff
+  # # # Common stuff
 
   handlers:
-    - name: restart apache
-      action: service name=httpd state=restarted
-    - name: restart mysql
-      service: name=mysql state=restarted
-  #   # - name: reload queue listener
-  #   #   supervisorctl name=queue_listen state=restarted
-  #   - name: restart beanstalkd
-  #     service: name=beanstalkd state=restarted
+    include: handlers/handlers.yml
