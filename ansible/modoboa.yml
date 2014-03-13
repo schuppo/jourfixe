@@ -1,0 +1,11 @@
+---
+-
+  hosts: vagrant
+  sudo: true
+  tasks:
+    - include: tasks/mysql.yml
+    - include: tasks/amavis.yml
+    - include: tasks/python.yml
+    - include: tasks/modoboa.yml
+  handlers:
+    - include: handlers/handlers.yml

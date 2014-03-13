@@ -1,0 +1,8 @@
+---
+-
+  hosts: vagrant
+  sudo: true
+  tasks:
+    - include: tasks/apache.yml
+  handlers:
+    - include: handlers/handlers.yml

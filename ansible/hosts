@@ -1,0 +1,1 @@
+vagrant ansible_ssh_host=10.10.10.10 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant

@@ -1,0 +1,19 @@
+---
+-
+  name: install python if not present
+  yum: name=iptables state=present
+
+-
+  name: install requirements via yum
+  yum: name={{ item }} state=present
+  with_items:
+    - python-devel
+    - python-setuptools
+    - python-setuptools-devel
+    - gcc
+    - libxml2-devel
+    - libxslt-devel
+-
+  name: install pip
+  command:  easy_install pip
+            creates=/usr/bin/pip

@@ -1,5 +1,8 @@
 ---
 -
+  name: open port
+  command: bash /vagrant/ansible/scripts/firewall_add_port_80.sh
+-
   name: ensure apache is installed
   yum: name=httpd state=present
 
