@@ -23,15 +23,16 @@
   copy: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot/conf.d/
   with_items:
     - "10-mail.conf"
-    - "20-imap.conf"
     - "10-auth.conf"
+    - "15-lda.conf"
+    - "20-imap.conf"
     - auth-sql.conf.ext
   notify: restart dovecot
 -
-  name: copy dovecot.aut-sql.conf.ext
+  name: copy dovecot-sql.conf.ext
   copy: src=/vagrant/ansible/templates/dovecot-sql.conf.ext dest=/etc/dovecot
   notify: restart dovecot
 -
   name: add modoboa cronjobs
-  command: bash /vagrant/ansible/scripts/add_modoboa_cron_jobs.sh
+  command: bash /vagrant/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }}
   notify: restart crond

@@ -4,22 +4,27 @@
   command:  pip install modoboa
             creates=/usr/bin/modoboa-admin.py
 -
-  name: create mysql databases
-  mysql_db: name={{ item }}
-            state=present
-  with_items:
-    - modoboa
+  name: create modoboa mysql database
+  mysql_db: name={{ database_name }} state=present
+-
+  name: create amavis mysql database
+  mysql_db: name=amavis state=present
+-
+  name: check if modoboa app exists already
+  stat: path=/var/www/sites/{{ modoboa_name }}
+  register: modoboaDir
 -
   name: run modoboa
-  shell:    modoboa-admin.py deploy modoboa_server --syncdb --collectstatic --with-amavis --dburl mysql://modoboa:modoboa@localhost/modoboa --amavis_dburl mysql://amavis:amavis@localhost/amavis --domain localhost
+  when: modoboaDir.stat.isdir is undefined
+  shell: modoboa-admin.py deploy {{ modoboa_name }} --syncdb --collectstatic --with-amavis --dburl {{ database_type }}://{{ database_user }}:{{ database_password }}@localhost/{{ database_name }} --amavis_dburl mysql://amavis:amavis@localhost/amavis --domain localhost
             chdir=/var/www/sites
   sudo: False
 -
   name: create mysql user
-  mysql_user: name=modoboa
+  mysql_user: name={{ database_user }}
               host={{ item }}
-              password=modoboa priv=*.*:ALL,GRANT
-              login_user=root
+              password={{ database_password }} priv=*.*:ALL,GRANT
+              login_user={{ database_login }}
               login_password=
   with_items:
     - "{{ ansible_hostname }}"

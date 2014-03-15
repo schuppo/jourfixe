@@ -1,11 +1,21 @@
 ---
 -
   hosts: vagrant
+  vars:
+    modoboa_name: mail
+    database_type: mysql
+    database_name: modoboa
+    database_user: modoboa
+    database_password: modoboa
+    database_login: root
+    database_login_password:
+
   sudo: true
   tasks:
     - include: tasks/mysql.yml
     - include: tasks/amavis.yml
     - include: tasks/python.yml
     - include: tasks/modoboa.yml
+    - include: tasks/postfix.yml
   handlers:
     - include: handlers/handlers.yml

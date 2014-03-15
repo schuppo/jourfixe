@@ -299,14 +299,14 @@ virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 
 relay_domains =
-virtual_mailbox_domains = mysql:/etc/postfix/sql-domains.cf
-virtual_alias_domains = mysql:/etc/postfix/sql-domain-aliases.cf
-virtual_alias_maps = mysql:/etc/postfix/sql-aliases.cf,
-      mysql:/etc/postfix/sql-domain-aliases-mailboxes.cf,
-      mysql:/etc/postfix/sql-catchall-aliases.cf
+virtual_mailbox_domains = {{ database_type }}:/etc/postfix/sql-domains.cf
+virtual_alias_domains = {{ database_type }}:/etc/postfix/sql-domain-aliases.cf
+virtual_alias_maps = {{ database_type }}:/etc/postfix/sql-aliases.cf,
+      {{ database_type }}:/etc/postfix/sql-domain-aliases-mailboxes.cf,
+      {{ database_type }}:/etc/postfix/sql-catchall-aliases.cf
 
 smtpd_recipient_restrictions =
-      check_recipient_access mysql:/etc/postfix/sql-maintain.cf
+      check_recipient_access {{ database_type }}:/etc/postfix/sql-maintain.cf
       permit_mynetworks
 
 # INTERNET OR INTRANET

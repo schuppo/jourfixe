@@ -1,6 +1,6 @@
 driver = mysql
 
-connect = host=<mysqld socket> dbname=<database> user=<user> password=<password>
+connect = host=<mysqld socket> dbname={{ database_name }} user={{ database_user }} password={{ database_password }}
 
 default_pass_scheme = CRYPT
 
