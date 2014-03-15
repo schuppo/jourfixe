@@ -8,4 +8,30 @@
   with_items:
     - postfix
     - dovecot
-
+-
+  name: start postfix
+  service: name=postfix state=started
+-
+  name: copy postfix files
+  copy: src=/vagrant/ansible/templates/{{ item }}.cf dest=/etc/postfix/conf.d
+  with_items:
+    - main
+    - master
+  notify: restart dovecot
+-
+  name: copy dovecot files
+  copy: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot/conf.d/
+  with_items:
+    - "10-mail.conf"
+    - "20-imap.conf"
+    - "10-auth.conf"
+    - auth-sql.conf.ext
+  notify: restart dovecot
+-
+  name: copy dovecot.aut-sql.conf.ext
+  copy: src=/vagrant/ansible/templates/dovecot-sql.conf.ext dest=/etc/dovecot
+  notify: restart dovecot
+-
+  name: add modoboa cronjobs
+  command: bash /vagrant/ansible/scripts/add_modoboa_cron_jobs.sh
+  notify: restart crond

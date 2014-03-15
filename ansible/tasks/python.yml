@@ -13,6 +13,7 @@
     - gcc
     - libxml2-devel
     - libxslt-devel
+    - MySQL-python
 -
   name: install pip
   command:  easy_install pip

@@ -27,8 +27,11 @@
     - ::1
     - localhost
 -
-  name: install mod_wsgi for apache if not present
-  yum: name=mod_wsgi state=present
+  name: install mod_wsgi and mod_python for apache if not present
+  yum: name={{ item }} state=present
+  with_items:
+    - mod_wsgi
+    - mod_python
 -
   name: copy modoboa-server.conf
   copy: src=/vagrant/ansible/templates/modoboa-server.conf
