@@ -42,3 +42,16 @@
   copy: src=/vagrant/ansible/templates/modoboa-server.conf
         dest=/etc/httpd/conf.d/
   notify: restart apache
+-
+  name: add modoboa to postfix's cronjobs
+  command: bash /vagrant/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }}
+  notify: restart crond
+-
+  name: check if sql-domains.cf exists
+  stat: path=/etc/postfix/sql-domains.cf
+  register: sqlDomainsExists
+- debug: msg={{ sqlDomainsExists }}
+-
+  name: run script if /etc/postfix/sql-domains.cf doesn't exist yet
+  when: sqlDomainsExists.stat.isfile is undefined
+  shell: modoboa-admin.py postfix_maps --dbtype mysql /etc/postfix <<< $'localhost\n{{ database_name }}\n{{ database_user }}\n'
