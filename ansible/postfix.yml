@@ -5,3 +5,5 @@
   tasks:
     - include: tasks/postfix.yml
     - include: tasks/iptables.yml
+  handlers:
+    - include: handlers/handlers.yml

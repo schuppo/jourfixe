@@ -1,0 +1,11 @@
+driver = mysql
+
+connect = host=<mysqld socket> dbname={{ database_name }} user={{ database_user }} password={{ database_password }}
+
+default_pass_scheme = CRYPT
+
+password_query = SELECT email AS user, password FROM core_user WHERE email='%u' and is_active=1
+
+user_query = SELECT '.mailbox/%d/%n' AS home, <uid> as uid, <gid> as gid, concat('*:bytes=', mb.quota, 'M') AS quota_rule FROM admin_mailbox mb INNER JOIN admin_domain dom ON mb.domain_id=dom.id WHERE mb.address='%n' AND dom.name='%d'
+
+iterate_query = SELECT email AS username FROM core_user

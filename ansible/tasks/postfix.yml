@@ -8,4 +8,33 @@
   with_items:
     - postfix
     - dovecot
-
+-
+  name: start postfix
+  service: name=postfix state=started
+-
+  name: copy postfix files
+  copy: src=/vagrant/ansible/templates/{{ item }}.cf dest=/etc/postfix/conf.d
+  with_items:
+    - main
+    - master
+  notify: restart dovecot
+-
+  name: copy dovecot files
+  copy: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot/conf.d/
+  with_items:
+    - "10-mail.conf"
+    - "10-auth.conf"
+    - "10-master.conf"
+    - "15-lda.conf"
+    - "20-imap.conf"
+    - "90-quota.conf"
+    - auth-sql.conf.ext
+  notify: restart dovecot
+-
+  name: copy dovecot-sql.conf.ext
+  copy: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot
+  with_items:
+    - dovecot.conf
+    - dovecot-sql.conf.ext
+    - dovecot-dict-sql.conf.ext
+  notify: restart dovecot
