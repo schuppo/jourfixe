@@ -2,6 +2,7 @@
 - hosts: all
   sudo: true
   tasks:
+  remote_user: vagrant
   - name: install misc packages
     yum: name={{ item }} state=present
     with_items:
@@ -22,10 +23,6 @@
   # - name: download sympa if not present
   #   shell: chdir=/vagrant/ansible/src creates=sympa-6.1.19.tar.gz wget http://www.sympa.org/distribution/sympa-6.1.19.tar.gz
 
-  # # SELinux python bindings for libselinux if not present
-  # - name: install libselinux-python
-  #   yum: name=libselinux-python state=present
-
   # # -
   # #   include: tasks/apache.yml
 
@@ -35,12 +32,6 @@
   # - name: create site symlink
   #   file: src=/vagrant dest=/var/www/site state=link
   #   notify: restart apache
-
-  # # -
-  # #   include: tasks/mysql.yml
-
-  # # -
-  # #   include: tasks/php.yml
 
   # -
   #   include: tasks/mailman.yml
@@ -56,19 +47,6 @@
   # # - name: install compass
   # #   command: gem install compass sass chunky_png fssm creates=/usr/local/bin/compass
 
-  # # # Set up site
-  # # #
-
-  # # - file: src=/vagrant dest=/var/www/site state=link
-  # # - file: path={{ item }} owner=vagrant group=vagrant mode=0777 state=directory
-  # #   with_items:
-  # #     - /var/cache/site
-  # #     - /var/cache/site/cache
-  # #     - /var/cache/site/clockwork
-  # #     - /var/cache/site/logs
-  # #     - /var/cache/site/meta
-  # #     - /var/cache/site/sessions
-  # #     - /var/cache/site/views
 
 
   # # # - name: install npm packages

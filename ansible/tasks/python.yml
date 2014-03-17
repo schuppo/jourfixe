@@ -4,7 +4,7 @@
   yum: name=iptables state=present
 
 -
-  name: install requirements via yum
+  name: install python requirements via yum
   yum: name={{ item }} state=present
   with_items:
     - python-devel

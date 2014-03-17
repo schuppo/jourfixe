@@ -16,4 +16,4 @@
 #   notify: restart mysql
 -
   name: Install mysql command line client configuration file
-  copy: src=/vagrant/ansible/templates/my.cnf dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant
+  template: src=/vagrant/ansible/templates/my.cnf dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant

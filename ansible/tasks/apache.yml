@@ -3,7 +3,7 @@
   name: open port
   command: bash /vagrant/ansible/scripts/firewall_add_port_80.sh
 -
-  name: ensure apache is installed
+  name: install apache if not present
   yum: name=httpd state=present
 
 -
@@ -25,13 +25,13 @@
         owner=vagrant
         group=vagrant
 -
-  copy: src=/vagrant/ansible/templates/fqdn.conf dest=/etc/httpd/conf.d/fqdn.conf
+  template: src=/vagrant/ansible/templates/fqdn.conf dest=/etc/httpd/conf.d/fqdn.conf
   notify: restart apache
 
 -
-  copy: src=/vagrant/ansible/templates/httpd.conf dest=/etc/httpd/conf/httpd.conf
+  template: src=/vagrant/ansible/templates/httpd.conf dest=/etc/httpd/conf/httpd.conf
   notify: restart apache
 
 -
-  copy: src=/vagrant/ansible/templates/nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
+  template: src=/vagrant/ansible/templates/nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
   notify: restart apache

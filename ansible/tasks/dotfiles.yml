@@ -7,20 +7,17 @@
   ignore_errors: True
   sudo: False
 
-# -
-#   name:  change ownership of .dotfiles directory
-#   file: path=/home/vagrant/.dotfiles
-#         state=directory
-#         owner=vagrant
-#         group=vagrant
-#         recurse=true
+-
+  name:  change ownership of .dotfiles directory
+  file: path=/home/vagrant/.dotfiles
+        state=directory
+        owner=vagrant
+        group=vagrant
+        recurse=true
+  sudo: True
 
 -
   name: bootstrap .dotfiles
-  shell:    creates=/home/vagrant/.vimrc
-            chdir=/home/vagrant/.dotfiles
-            ./script/bootstrap <<< $'vagrant\nO'
-
--
-  name: use zsh as default shell
-  command: chsh -s /bin/zsh vagrant
+  shell:  chdir=/home/vagrant/.dotfiles
+          ./script/bootstrap <<< $'vagrant\nO'
+  sudo: False

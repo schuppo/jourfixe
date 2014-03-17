@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         config.vm.network :private_network, ip: "10.10.10.10"
 
-        # forward to port 9888
+        # forward to port 8888
         config.vm.network "forwarded_port", guest: 80, host: 8888
 
         config.vm.provision :shell, :path => "provision.sh"

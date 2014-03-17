@@ -13,6 +13,11 @@
 
   sudo: true
   tasks:
+    - include: tasks/apache.yml
+    - include: tasks/php.yml
+    - include: tasks/mysql.yml
+    - include: tasks/amavis.yml
+    - include: tasks/python.yml
     - include: tasks/modoboa.yml
     - include: tasks/postfix.yml
   handlers:

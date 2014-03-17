@@ -20,6 +20,12 @@
             chdir=/var/www/sites
   sudo: False
 -
+  name: change owner of modoboaDir and files
+  file: path=/var/www/sites/{{ modoboa_name }}
+        owner=apache group=apache
+        recurse=yes
+        state=directory
+-
   name: create mysql user
   mysql_user: name={{ database_user }}
               host={{ item }}
@@ -36,11 +42,10 @@
   yum: name={{ item }} state=present
   with_items:
     - mod_wsgi
-    - mod_python
 -
   name: copy modoboa-server.conf
-  copy: src=/vagrant/ansible/templates/modoboa-server.conf
-        dest=/etc/httpd/conf.d/
+  template: src=/vagrant/ansible/templates/modoboa-server.conf
+            dest=/etc/httpd/conf.d/
   notify: restart apache
 -
   name: add modoboa to postfix's cronjobs
@@ -50,7 +55,6 @@
   name: check if sql-domains.cf exists
   stat: path=/etc/postfix/sql-domains.cf
   register: sqlDomainsExists
-- debug: msg={{ sqlDomainsExists }}
 -
   name: run script if /etc/postfix/sql-domains.cf doesn't exist yet
   when: sqlDomainsExists.stat.isfile is undefined
