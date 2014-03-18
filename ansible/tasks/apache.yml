@@ -10,20 +10,14 @@
   name: make sure apache is running
   service: name=httpd state=started enabled=true
 
-  # - copy: src=/vagrant/ansible/templates/site.conf dest=/etc/httpd/sites-enabled/site.conf
-  #   notify: restart apache
-
-  # - file: path=/etc/httpd/sites-enabled/000-default.conf state=absent
-  #   notify: restart apache
-
 -
-  file: path=/etc/httpd/conf.d state=directory
+  file: path=/etc/httpd/conf.d/virtual_hosts state=directory
 
 -
   file: path=/var/www/sites
         state=directory
-        owner=vagrant
-        group=vagrant
+        owner=apache
+        group=apache
 -
   template: src=/vagrant/ansible/templates/fqdn.conf dest=/etc/httpd/conf.d/fqdn.conf
   notify: restart apache

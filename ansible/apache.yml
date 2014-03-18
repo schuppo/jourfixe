@@ -4,5 +4,6 @@
   sudo: true
   tasks:
     - include: tasks/apache.yml
+    - incude: tasks/php.yml
   handlers:
     - include: handlers/handlers.yml
