@@ -1,0 +1,14 @@
+---
+-
+  hosts: vagrant
+  sudo: true
+  tasks:
+  -
+    name: customize clock
+    lineinfile: dest=/etc/sysconfig/clock
+                regexp=ZONE=
+                line=ZONE="Berlin/Europe"
+  -
+    name: copy timezone info
+    copy:   src=/usr/share/zoneinfo/Europe/Berlin
+            dest=/etc/localtime

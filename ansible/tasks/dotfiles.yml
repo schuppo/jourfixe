@@ -17,6 +17,11 @@
   sudo: True
 
 -
+  name:   change url of git's origin
+  shell:  git remote set-url origin https://schuppo@github.com/schuppo/dotfiles.git
+          chdir=~/.dotfiles
+  sudo: False
+-
   name: bootstrap .dotfiles
   shell:  chdir=/home/vagrant/.dotfiles
           ./script/bootstrap <<< $'vagrant\nO'
