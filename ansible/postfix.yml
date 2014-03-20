@@ -4,10 +4,6 @@
   sudo: true
   remote_user: schuppo
   vars:
-    - database_type: mysql
-    - database_name: mail
-    - database_user: mail
-    - database_root: root
     - database_root_password:
   vars_prompt:
     -

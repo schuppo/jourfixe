@@ -1,0 +1,16 @@
+---
+-
+  name: prodution
+  hosts: production
+  sudo: True
+  vars:
+    env: production
+  vars_prompt:
+    -
+      name: database_password
+      prompt: "Database password"
+      private: yes
+      confirm: yes
+  roles:
+    - common
+    # - local

@@ -1,0 +1,21 @@
+---
+- include: iptables.yml
+-
+  name: customize clock
+  lineinfile: dest=/etc/sysconfig/clock
+              regexp=ZONE=
+              line=ZONE="Berlin/Europe"
+-
+  name: copy timezone info
+  command: cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+- include: ntp.yml
+-
+  name: set /etc/crontab
+  copy: src=crontab
+        dest=/etc/
+-
+  name: start cron
+  service: name=crond state=started
+-
+  name: autostart cron
+  command: chkconfig crond on

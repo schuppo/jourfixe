@@ -1,0 +1,16 @@
+---
+-
+  name: local
+  hosts: local
+  sudo: True
+  vars:
+    env: local
+  vars_prompt:
+    -
+      name: database_password
+      prompt: "Database password"
+      private: yes
+  roles:
+    - common
+    # - local
+

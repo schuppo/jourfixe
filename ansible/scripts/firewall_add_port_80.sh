@@ -1,8 +1,8 @@
 #!/bin/bash
 if
-    ! iptables -L | grep 'http[^a-z]'
+    ! /sbin/iptables -L | grep 'http[^a-z]'
 then
-    iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+    /sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 fi
 #
 # Save settings
@@ -11,4 +11,4 @@ fi
 #
 # List rules
 #
- iptables -L -v
+ /sbin/iptables -L -v

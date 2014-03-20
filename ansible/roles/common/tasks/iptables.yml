@@ -4,7 +4,7 @@
   command: chkconfig --level 345 iptables on
 -
   name: define basic table
-  command: bash /vagrant/ansible/scripts/firewall_basic.sh
+  command: bash /mnt/ansible/scripts/firewall_basic.sh
 -
   name: restart iptables
   service: name=iptables state=started

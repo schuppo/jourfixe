@@ -1,0 +1,5 @@
+---
+- name: site
+  hosts: all
+  - include: local.yml
+  - include: production.yml

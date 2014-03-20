@@ -1,2 +1,16 @@
-test ansible_ssh_host=test.fritz.box ansible_ssh_user=vagrant
-jourfixe ansible_ssh_user=schuppo
+[local]
+test ansible_ssh_host=test.fritz.box ansible_ssh_user=vagrant environment=local database_root_password=
+
+[production]
+jourfixe
+
+[site:children]
+local
+production
+
+[site:vars]
+modoboa_name=mail
+database_type=mysql
+database_name=mail
+database_user=mail
+database_root=root

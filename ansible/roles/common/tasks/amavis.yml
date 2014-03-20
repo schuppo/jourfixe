@@ -1,4 +1,4 @@
- ---
+---
 -
   name: Install amavis and dependencies
   yum: name={{ item }} state=present

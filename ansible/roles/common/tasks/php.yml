@@ -9,9 +9,8 @@
     ignore_errors: True
 
   -
-    copy: src=/vagrant/ansible/templates/webtatic.repo dest=/etc/yum.repos.d/
-
-
+    copy: src=webtatic.repo
+          dest=/etc/yum.repos.d/
   -
     name: install PHP55 packages
     yum: name={{ item }} state=present
@@ -25,5 +24,6 @@
     file: path=/etc/php/conf.d state=directory
 
   -
-    copy: src=/vagrant/ansible/templates/php-site.ini dest=/etc/php/conf.d/php-site.ini
+    copy: src=php-site.ini dest=/etc/php/conf.d/php-site.ini
+    when: env=='local'
     notify: restart apache

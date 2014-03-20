@@ -1,0 +1,9 @@
+---
+- include: basic.yml
+- include: modoboa.yml
+- include: apache.yml
+- include: python.yml
+- include: mysql.yml
+- include: postfix.yml
+- include: amavis.yml
+

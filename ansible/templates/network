@@ -1,3 +1,3 @@
 NETWORKING=yes
-HOSTNAME=mail.test
+HOSTNAME=test.local
 RES_OPTIONS="single-request-reopen"
