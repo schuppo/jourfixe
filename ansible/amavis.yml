@@ -1,0 +1,11 @@
+---
+-
+  hosts: vagrant
+  sudo: true
+  vars:
+   - domain: local
+   - hostname: test
+  tasks:
+    - include: tasks/amavis.yml
+  handlers:
+    - include: handlers/handlers.yml

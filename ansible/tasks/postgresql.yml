@@ -1,0 +1,25 @@
+---
+-
+  name: Add repo from postgresql.org
+  command: rpm -Uvh http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm
+  ignore_errors: True
+
+-
+  name: install postgresql packages
+  yum: name={{ item }} state=present
+  with_items:
+    - python-psycopg2
+    - postgresql93-server
+    - postgresql93-contrib
+-
+  name: register postgresql as service
+  service: name=postgresql-9.3 enabled=yes
+-
+  name: Initialize database
+  command:  service postgresql initdb
+            creates=/var/lib/pgsql/9.3/data/postgresql.conf
+  ignore_errors: True
+  tags: init
+-
+  name: activate service
+  service: name=postgresql-9.3 state=started

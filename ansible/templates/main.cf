@@ -97,6 +97,7 @@ mail_owner = postfix
 #
 #myorigin = $myhostname
 #myorigin = $mydomain
+myorigin = $mydomain
 
 # RECEIVING MAIL
 
@@ -688,3 +689,19 @@ sample_directory = /usr/share/doc/postfix-2.6.6/samples
 # readme_directory: The location of the Postfix README files.
 #
 readme_directory = /usr/share/doc/postfix-2.6.6/README_FILES
+
+# [ADDED] Paths to TLS certs
+smtpd_tls_key_file = /etc/postfix/certs/key.pem
+smtpd_tls_cert_file = /etc/postfix/certs/cert.pem
+
+# virtuals  - but very likely not used
+#local_recipient_maps =
+#virtual_uid_maps = static:200
+#virtual_gid_maps = static:1000
+#transport_maps = {{ database_type }}:/etc/postfix/{{ database_type }}/transport.cf
+#virtual_mailbox_base = /home/mail
+#virtual_mailbox_maps = {{ database_type }}:/etc/postfix/{{ database_type }}/mailboxes.cf
+#virtual_maps = {{ database_type }}:/etc/postfix/{{ database_type }}/virtual.cf
+#mydestination = $mydomain, $myhostname
+
+content_filter = amavisfeed:[127.0.0.1]:10024

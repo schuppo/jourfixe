@@ -12,3 +12,13 @@
     name: copy timezone info
     copy:   src=/usr/share/zoneinfo/Europe/Berlin
             dest=/etc/localtime
+  -
+    name: set /etc/crontab
+    copy: src=/mnt/ansible/src/crontab
+          dest=/etc/
+  -
+    name: start cron
+    service: name=crond state=started
+  -
+    name: autostart cron
+    command: chkconfig crond on

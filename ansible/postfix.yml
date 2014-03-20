@@ -1,9 +1,25 @@
 ---
 -
-  hosts: vagrant
+  hosts: all
   sudo: true
+  remote_user: schuppo
+  vars:
+    - database_type: mysql
+    - database_name: mail
+    - database_user: mail
+    - database_root: root
+    - database_root_password:
+  vars_prompt:
+    -
+      name: database_password
+      prompt: "Database password"
+      private: yes
+      # encrypt: "md5_crypt"
+      confirm: yes
+      # salt_size: 7
   tasks:
-    - include: tasks/postfix.yml
     - include: tasks/iptables.yml
+    - include: tasks/postfix.yml
+    # - include: tasks/postgresql.yml
   handlers:
     - include: handlers/handlers.yml

@@ -2,7 +2,7 @@
 sudo rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-6
 sudo yum -y install yum-priorities
 
-echo Copying CentOS-Base.repo to /etc/yum.repos.de/
+echo Copying CentOS-Base.repo to /etc/yum.repos.d/
 cp /vagrant/templates/CentOS-Base.repo /etc/yum.repos.d/
 
 sudo rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6

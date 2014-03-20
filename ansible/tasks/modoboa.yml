@@ -4,12 +4,6 @@
   command:  pip install modoboa
             creates=/usr/bin/modoboa-admin.py
 -
-  name: create modoboa mysql database
-  mysql_db: name={{ database_name }} state=present
--
-  name: create amavis mysql database
-  mysql_db: name=amavis state=present
--
   name: check if modoboa app exists already
   stat: path=/var/www/sites/{{ modoboa_name }}
   register: modoboaDir
@@ -25,18 +19,6 @@
         owner=apache group=apache
         recurse=yes
         state=directory
--
-  name: create mysql user
-  mysql_user: name={{ database_user }}
-              host={{ item }}
-              password={{ database_password }} priv=*.*:ALL,GRANT
-              login_user={{ database_login }}
-              login_password=
-  with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
 -
   name: install mod_wsgi and mod_python for apache if not present
   yum: name={{ item }} state=present

@@ -1,0 +1,3 @@
+NETWORKING=yes
+HOSTNAME=mail.test
+RES_OPTIONS="single-request-reopen"

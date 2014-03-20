@@ -1,11 +1,25 @@
 ---
-- name: restart apache
-  action: service name=httpd state=restarted
-- name: restart mysql
-  service: name=mysql state=restarted
+-
+  name: restart apache
+  service: name=httpd state=restarted
+-
+  name: restart mysqld
+  service: name=mysqld state=restarted
 -
   name: restart crond
   service: name=crond state=restarted
 -
   name: restart dovecot
   service: name=dovecot state=restarted
+-
+  name: restart iptables
+  service: name=iptables state=restarted
+-
+  name: restart postfix
+  service: name=postfix state=restarted
+-
+  name: restart postgresql
+  service: name=postgresql-9.3 state=restarted
+-
+  name: restart handlers
+  service: name=ntpd state=restarted

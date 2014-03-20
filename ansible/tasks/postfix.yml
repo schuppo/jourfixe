@@ -1,5 +1,23 @@
 ---
 -
+  name: ensure iptables is running
+  service: name=iptables state=started
+  tags: iptables
+-
+  name: remove port 587 entry
+  lineinfile: dest=/etc/sysconfig/iptables
+              regexp='--dport\ 587'
+              state=absent
+  tags: iptables
+-
+  name: insert port 587 entry
+  tags: iptables
+  lineinfile: dest=/etc/sysconfig/iptables
+            line='-A INPUT -p tcp -m tcp --dport 587 -j ACCEPT'
+            insertbefore='-A INPUT -i lo -j ACCEPT'
+            state=present
+  notify: restart iptables
+-
   name: remove sendmail
   yum: name=sendmail state=absent
 -
@@ -13,17 +31,23 @@
   service: name=postfix state=started
 -
   name: copy postfix files
-  template: src=/vagrant/ansible/templates/{{ item }}.cf dest=/etc/postfix/conf.d
+  template: src=/mnt/ansible/templates/{{ item }}.cf dest=/etc/postfix/
   with_items:
     - main
     - master
-  notify: restart dovecot
+  notify: restart postfix
 -
   name: copy dovecot files
-  template: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot/conf.d/
+  copy: src=/mnt/ansible/src/10-ssl.conf
+        dest=/etc/dovecot.conf.d/
+  notify: restart dovecot
+  tags: test
+-
+  name: copy dovecot templates
+  template: src=/mnt/ansible/templates/{{ item }} dest=/etc/dovecot/conf.d/
   with_items:
-    - "10-mail.conf"
     - "10-auth.conf"
+    - "10-mail.conf"
     - "10-master.conf"
     - "15-lda.conf"
     - "20-imap.conf"
@@ -32,9 +56,77 @@
   notify: restart dovecot
 -
   name: copy dovecot-sql.conf.ext
-  template: src=/vagrant/ansible/templates/{{ item }} dest=/etc/dovecot
+  template: src=/mnt/ansible/templates/{{ item }} dest=/etc/dovecot
   with_items:
     - dovecot.conf
     - dovecot-sql.conf.ext
     - dovecot-dict-sql.conf.ext
   notify: restart dovecot
+-
+  name: create /etc/postfix/certs
+  file: state=directory path=/etc/postfix/certs
+-
+  name: create postfix mysql database
+  mysql_db: name={{ database_name }} state=present
+-
+  name: remove old mysql user
+  mysql_user: name={{ database_user }}
+              login_user={{ database_root }}
+              login_password= {{ database_root_password }}
+              state=absent
+-
+  name: create mysql user
+  mysql_user: name={{ database_user }}
+              host={{ item }}
+              password={{ database_password }} priv=*.*:ALL,GRANT
+              login_user={{ database_root }}
+              login_password= {{ database_root_password }}
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+# - name: create transports table
+#   command: mysql -u {{ database_user }} --password={{ database_password }} {{ database_name }} -e 'CREATE TABLE transports (domain VARCHAR(50) NOT NULL, gid INTEGER UNIQUE NOT NULL, transport TEXT NOT NULL, PRIMARY KEY (domain) );'
+#   ignore_errors: True
+# - name: create users table
+#   command: mysql -u {{ database_user }} --password={{ database_password }} {{ database_name }} -e 'CREATE TABLE users (email VARCHAR(255) NOT NULL, password TEXT NOT NULL, realname TEXT, maildir TEXT NOT NULL, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (email) );'
+#   ignore_errors: True
+#   tags: test
+# - name: create aliases table
+#   command: mysql -u {{ database_user }} --password={{ database_password }} {{ database_name }} -e 'CREATE TABLE aliases (alias VARCHAR(255) NOT NULL, email TEXT NOT NULL, PRIMARY KEY (alias) );'
+#   ignore_errors: True
+# -
+#   name: add mail group
+#   group: name={{ database_user }} state=present gid=1000
+# -
+#   name: add user
+#   user: name={{ database_user }} state=present group={{ database_user }} home=/home/{{ database_user }} shell=/sbin/nologin uid=200
+# -
+#   name: "create /etc/postfix/[database-type]"
+#   file: path=/etc/postfix/{{ database_type }} state=directory
+# -
+#   name: add postfix templates
+#   template: src=templates/{{ item }}.cf dest=/etc/postfix/{{ database_type }}/
+#   with_items:
+#     - virtual
+#     - mailboxes
+#     - transport
+# -
+#   name: check if necessary entry already in file
+#   command: "grep 'host {{ database_name }} {{ database_user}} 127.0.0.1/32 md5' /var/lib/pgsql/9.3/data/pg_hba.conf"
+#   ignore_errors: True
+#   # lineinfile: dest=/var/lib/pgsql/9.3/data/pg_hba.conf
+#   #             regexp="^((?!host {{ database_name }} {{ database_user}} 127.0.0.1/32 md5).)*$"
+#   register: pg_hba_entry
+#   # tags: postgresql
+# - debug: var=pg_hba_entry==''
+#   tags: postgresql
+# -
+#   name: add entry to /var/lib/pgsql/9.3/data/pg_hba.conf
+#   tags: postgresql
+#   # when: pg_hba_entry.stdout == ''
+#   lineinfile: dest=/var/lib/pgsql/9.3/data/pg_hba.conf
+#               line='host {{ database_name }} {{ database_user}} 127.0.0.1/32 md5'
+#   notify: "postgresql-9.3 restarted"
+

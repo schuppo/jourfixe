@@ -15,5 +15,6 @@
   tasks:
     - include: tasks/modoboa.yml
     - include: tasks/postfix.yml
+    - include: tasks/amavis.yml
   handlers:
     - include: handlers/handlers.yml
