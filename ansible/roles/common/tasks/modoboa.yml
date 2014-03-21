@@ -9,8 +9,9 @@
   register: modoboaDir
 -
   name: install modoboa
+  tags: modoboa_install
   when: modoboaDir.stat.isdir is undefined
-  shell: modoboa-admin.py deploy {{ modoboa_name }} --syncdb --collectstatic --with-amavis --dburl {{ database_type }}://{{ database_user }}:{{ database_password }}@localhost/{{ database_name }} --amavis_dburl mysql://amavis:amavis@localhost/amavis --domain {{ ansible_domain }}
+  shell: modoboa-admin.py deploy {{ modoboa_name }} --syncdb --collectstatic --with-amavis --dburl {{ database_type }}://{{ database_user }}:{{ database_password }}@localhost/{{ database_name }} --amavis_dburl oracle://amavis:amavis@localhost/amavis --domain {{ ansible_domain }}
             chdir=/var/www
 # -
 #   name: change owner of modoboaDir and files
@@ -20,12 +21,15 @@
 #         state=directory
 -
   name: install mod_wsgi
+  tags: modoboa_install
   yum: name={{ item }} state=present
   with_items:
     - mod_wsgi
 -
   name: copy wsgi.py template
-  tags: wsgi.py
+  tags:
+    - modoboa_install
+    - wsgi.py
   template: src=wsgi.py dest=/var/www/{{ modoboa_name }}/{{ modoboa_name }}/
 -
   name: copy modoboa-server.conf

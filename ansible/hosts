@@ -14,3 +14,5 @@ database_type=mysql
 database_name=mail
 database_user=mail
 database_root=root
+database_user_id=200
+database_user_group_id=1000

@@ -26,6 +26,7 @@
   with_items:
     - postfix
     - dovecot
+    - dovecot-mysql
 -
   name: start postfix
   service: name=postfix state=started
@@ -39,7 +40,7 @@
 -
   name: copy dovecot files
   copy: src={{ item}}
-        dest=/etc/dovecot.conf.d/
+        dest=/etc/dovecot/conf.d/
   with_items:
     - "10-ssl.conf"
     - auth-sql.conf.ext
@@ -87,4 +88,10 @@
     - 127.0.0.1
     - ::1
     - localhost
+-
+  name: add mail group
+  group: name={{ database_user }} state=present gid={{ database_user_group_id }}
+-
+  name: add user
+  user: name={{ database_user }} state=present group={{ database_user }} home=/home/{{ database_user }} shell=/sbin/nologin uid={{ database_user_id }}
 
