@@ -295,20 +295,6 @@ unknown_local_recipient_reject_code = 550
 # permit_mx_backup restriction description in postconf(5).
 #
 #relay_domains = $mydestination
-# [ADDED]
-virtual_transport = dovecot
-dovecot_destination_recipient_limit = 1
-
-relay_domains =
-virtual_mailbox_domains = {{ database_type }}:/etc/postfix/sql-domains.cf
-virtual_alias_domains = {{ database_type }}:/etc/postfix/sql-domain-aliases.cf
-virtual_alias_maps = {{ database_type }}:/etc/postfix/sql-aliases.cf,
-      {{ database_type }}:/etc/postfix/sql-domain-aliases-mailboxes.cf,
-      {{ database_type }}:/etc/postfix/sql-catchall-aliases.cf
-
-smtpd_recipient_restrictions =
-      check_recipient_access {{ database_type }}:/etc/postfix/sql-maintain.cf
-      permit_mynetworks
 
 # INTERNET OR INTRANET
 
@@ -694,6 +680,24 @@ readme_directory = /usr/share/doc/postfix-2.6.6/README_FILES
 smtpd_tls_key_file = /etc/postfix/certs/key.pem
 smtpd_tls_cert_file = /etc/postfix/certs/cert.pem
 
+# [ADDED]
+virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
+
+mydestination = $mydomain, $myhostname, localhost
+
+relay_domains =
+virtual_mailbox_domains = {{ database_type }}:/etc/postfix/sql-domains.cf
+virtual_alias_domains = {{ database_type }}:/etc/postfix/sql-domain-aliases.cf
+virtual_alias_maps = {{ database_type }}:/etc/postfix/sql-aliases.cf,
+      {{ database_type }}:/etc/postfix/sql-domain-aliases-mailboxes.cf,
+      {{ database_type }}:/etc/postfix/sql-catchall-aliases.cf
+
+smtpd_recipient_restrictions =
+      check_recipient_access {{ database_type }}:/etc/postfix/sql-maintain.cf
+      permit_mynetworks
+
+
 # virtuals  - but very likely not used
 #local_recipient_maps =
 #virtual_uid_maps = static:200
@@ -702,6 +706,5 @@ smtpd_tls_cert_file = /etc/postfix/certs/cert.pem
 #virtual_mailbox_base = /home/mail
 #virtual_mailbox_maps = {{ database_type }}:/etc/postfix/{{ database_type }}/mailboxes.cf
 #virtual_maps = {{ database_type }}:/etc/postfix/{{ database_type }}/virtual.cf
-#mydestination = $mydomain, $myhostname
 
 content_filter = amavisfeed:[127.0.0.1]:10024

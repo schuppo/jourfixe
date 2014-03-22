@@ -16,10 +16,4 @@ sudo yum -y install ansible libselinux-python
 sudo mkdir -p /etc/ansible
 printf '[vagrant]\nlocalhost\n' | sudo tee /etc/ansible/hosts > /dev/null
 echo Running provisioner: ansible
-PYTHONUNBUFFERED=1 ansible-playbook -c local /vagrant/ansible/playbook.yml
 
-# sudo rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
-# sudo rpm --import http://repo.webtatic.com/yum/RPM-GPG-KEY-webtatic-andy
-# sudo yum -y install php55w php55w-mysql mysql-server zsh git
-# cp /vagrant/.ssh/config /$HOME/.ssh/
-# git clone git@github.com:schuppo/dotfiles.git /home/vagrant/.dotfiles

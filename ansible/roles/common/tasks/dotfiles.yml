@@ -1,21 +1,19 @@
 ---
+- debug: var=dotfiles_dest
 -
   name: get .dotfiles from github repo
   git:  repo=https://github.com/schuppo/dotfiles.git
-        dest=/home/vagrant/.dotfiles
-        #accept_hostkey=yes #added in ansible 1.5
+        dest={{ dotfiles_dest | default('/root') }}/.dotfiles #accept_hostkey=yes #added in ansible 1.5
   ignore_errors: True
   sudo: False
-
 -
-  name:  change ownership of .dotfiles directory
+  name: change ownership of .dotfiles directory
   file: path=/home/vagrant/.dotfiles
         state=directory
-        owner=vagrant
-        group=vagrant
+        owner={{ user | default('root') }}
+        group={{ usern | default('root') }}
         recurse=true
   sudo: True
-
 -
   name:   change url of git's origin
   shell:  git remote set-url origin https://schuppo@github.com/schuppo/dotfiles.git

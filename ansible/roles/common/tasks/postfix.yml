@@ -32,14 +32,14 @@
   service: name=postfix state=started
 -
   name: copy postfix files
-  template: src={{ item }}.cf dest=/etc/postfix/
+  template: src=postfix/{{ item }}.cf dest=/etc/postfix/
   with_items:
     - main
     - master
   notify: restart postfix
 -
   name: copy dovecot files
-  copy: src={{ item}}
+  copy: src=dovecot/{{ item }}
         dest=/etc/dovecot/conf.d/
   with_items:
     - "10-ssl.conf"
@@ -47,7 +47,7 @@
   notify: restart dovecot
 -
   name: copy dovecot templates
-  template: src={{ item }} dest=/etc/dovecot/conf.d/
+  template: src=dovecot/{{ item }} dest=/etc/dovecot/conf.d/
   with_items:
     - "10-auth.conf"
     - "10-mail.conf"
@@ -58,7 +58,7 @@
   notify: restart dovecot
 -
   name: copy dovecot-sql.conf.ext
-  template: src={{ item }} dest=/etc/dovecot
+  template: src=dovecot/{{ item }} dest=/etc/dovecot
   with_items:
     - dovecot.conf
     - dovecot-sql.conf.ext
@@ -90,8 +90,8 @@
     - localhost
 -
   name: add mail group
-  group: name={{ database_user }} state=present gid={{ database_user_group_id }}
+  group: name={{ mailbox_owner }} state=present gid={{ mailbox_owner_group_id }}
 -
   name: add user
-  user: name={{ database_user }} state=present group={{ database_user }} home=/home/{{ database_user }} shell=/sbin/nologin uid={{ database_user_id }}
+  user: name={{ mailbox_owner }} state=present group={{ mailbox_owner }} home=/home/{{ mailbox_owner }} shell=/sbin/nologin uid={{ mailbox_owner_id }}
 

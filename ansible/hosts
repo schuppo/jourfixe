@@ -1,5 +1,5 @@
 [local]
-test ansible_ssh_host=test.fritz.box ansible_ssh_user=vagrant environment=local database_root_password=
+test ansible_ssh_host=192.168.178.38 ansible_ssh_user=vagrant environment=local database_root_password=
 
 [production]
 jourfixe
@@ -14,5 +14,6 @@ database_type=mysql
 database_name=mail
 database_user=mail
 database_root=root
-database_user_id=200
-database_user_group_id=1000
+mailbox_owner=vmail
+mailbox_owner_id=5000
+mailbox_owner_group_id=5000
