@@ -8,8 +8,11 @@ submission inet n       -       n       -       -       smtpd
   -o smtpd_tls_wrappermode=no
   -o smtpd_tls_security_level=encrypt
   -o smtpd_sasl_auth_enable=yes
-  -o smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
+  -o smtpd_sasl_security_options=noanonymous
+  -o smtpd_sasl_local_domain=$myhostname
+  -o smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject
   -o milter_macro_daemon_name=ORIGINATING
+  -o smtpd_sender_restrictions=reject_sender_login_mismatch
   -o smtpd_sasl_type=dovecot
   -o smtpd_sasl_path=private/auth
 

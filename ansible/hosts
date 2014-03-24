@@ -1,5 +1,5 @@
 [local]
-test ansible_ssh_host=192.168.178.38 ansible_ssh_user=vagrant environment=local database_root_password=
+mail ansible_ssh_user=vagrant environment=local database_root_password=
 
 [production]
 jourfixe

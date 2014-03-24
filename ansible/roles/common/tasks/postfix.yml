@@ -1,5 +1,11 @@
 ---
 -
+  name: add mail group
+  group: name={{ mailbox_owner }} state=present gid={{ mailbox_owner_group_id }}
+-
+  name: add user
+  user: name={{ mailbox_owner }} state=present group={{ mailbox_owner }} home=/home/{{ mailbox_owner }} shell=/sbin/nologin uid={{ mailbox_owner_id }}
+-
   name: ensure iptables is running
   service: name=iptables state=started
   tags: iptables
@@ -28,8 +34,11 @@
     - dovecot
     - dovecot-mysql
 -
-  name: start postfix
-  service: name=postfix state=started
+  name: start and enable postfix & dovecot
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - postfix
+    - dovecot
 -
   name: copy postfix files
   template: src=postfix/{{ item }}.cf dest=/etc/postfix/
@@ -59,6 +68,7 @@
 -
   name: copy dovecot-sql.conf.ext
   template: src=dovecot/{{ item }} dest=/etc/dovecot
+            owner=dovecot group=dovecot
   with_items:
     - dovecot.conf
     - dovecot-sql.conf.ext
@@ -88,10 +98,3 @@
     - 127.0.0.1
     - ::1
     - localhost
--
-  name: add mail group
-  group: name={{ mailbox_owner }} state=present gid={{ mailbox_owner_group_id }}
--
-  name: add user
-  user: name={{ mailbox_owner }} state=present group={{ mailbox_owner }} home=/home/{{ mailbox_owner }} shell=/sbin/nologin uid={{ mailbox_owner_id }}
-
