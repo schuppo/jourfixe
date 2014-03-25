@@ -8,7 +8,6 @@ submission inet n       -       n       -       -       smtpd
   -o smtpd_tls_wrappermode=no
   -o smtpd_tls_security_level=encrypt
   -o smtpd_sasl_auth_enable=yes
-  -o smtpd_sasl_security_options=noanonymous
   -o smtpd_sasl_local_domain=$myhostname
   -o smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject
   -o milter_macro_daemon_name=ORIGINATING
@@ -79,3 +78,6 @@ amavisfeed unix -       -       n       -       2       lmtp
     -o smtpd_milters=
     -o local_recipient_maps=
     -o relay_recipient_maps=
+
+autoreply unix        -       n       n       -       -       pipe
+    user={{ mailbox_owner }}:{{ mailbox_owner }} argv=python /var/www/mail/manage.py autoreply $sender $mailbox

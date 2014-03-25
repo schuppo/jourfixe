@@ -75,6 +75,13 @@
     - dovecot-dict-sql.conf.ext
   notify: restart dovecot
 -
+  name: change ownership of /var/run/dovecot/dict
+  file: state=file owner={{ mailbox_owner }} group={{ mailbox_owner }}
+        path=/var/run/dovecot/{{ item }}
+  with_items:
+    - dict
+    - auth-userdb
+-
   name: create /etc/postfix/certs
   file: state=directory path=/etc/postfix/certs
 -

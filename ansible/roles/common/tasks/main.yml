@@ -4,6 +4,6 @@
 # - include: python.yml
 - include: postfix.yml
 # - include: apache.yml
-# - include: modoboa.yml
+- include: modoboa.yml
 # - include: amavis.yml
 

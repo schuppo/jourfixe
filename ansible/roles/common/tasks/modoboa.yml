@@ -14,6 +14,25 @@
   shell: modoboa-admin.py deploy {{ modoboa_name }} --syncdb --collectstatic --with-amavis --dburl {{ database_type }}://{{ database_user }}:{{ database_password }}@localhost/{{ database_name }} --amavis_dburl oracle://amavis:amavis@localhost/amavis --domain {{ ansible_domain }}
             chdir=/var/www
 -
+ name: change modoboas ownership
+ file: state=directory recurse=yes owner={{ mailbox_owner }} group={{ mailbox_owner }}
+        path=/var/www/mail
+# -
+#   name: install rrdtool
+#   yum: name={{ item }} state=present
+#   with_items:
+#     - rrdtool
+#     - rrdtool-python
+# -
+#   name: create directory for mail statistics
+#   file: state=directory path=/tmp/modoboa
+# -
+#   name: add modoboa group
+#   group: name={{ modoboa_user }} state=present gid={{ modoboa_user_id }}
+# -
+#   name: add modoboa user
+#   user: name={{ modoboa_user }} state=present group={{ modoboa_user }} createhome=no shell=/sbin/nologin uid={{ modoboa_user_id }}
+-
   name: install mod_wsgi
   tags: modoboa_install
   yum: name={{ item }} state=present
@@ -37,12 +56,13 @@
   notify: restart apache
 -
   name: add modoboa to postfix's cronjobs
-  command: bash /mnt/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }}
+  tags: cron
+  command: bash /mnt/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }} {{ mailbox_owner }}
   notify: restart crond
--
-  name: check if sql-domains.cf exists
-  stat: path=/etc/postfix/sql-domains.cf
-  register: sqlDomainsExists
+# -
+#   name: check if sql-domains.cf exists
+#   stat: path=/etc/postfix/sql-domains.cf
+#   register: sqlDomainsExists
 # -
 #   name: run script if /etc/postfix/sql-domains.cf doesn't exist yet
 #   when: sqlDomainsExists.stat.isfile is undefined

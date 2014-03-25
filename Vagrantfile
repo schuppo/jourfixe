@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             # set memory to > 1GB
             #v.customize [ "modifyvm", :id, "--memory", "1100" ]
         end
-        config.vm.host_name = "mail.test"
+        config.vm.host_name = "mail.fritz.box"
 
         # set lavish permission so that everything is executable
         #

@@ -681,6 +681,7 @@ smtpd_tls_key_file = /etc/postfix/certs/key.pem
 smtpd_tls_cert_file = /etc/postfix/certs/cert.pem
 
 # [ADDED]
+inet_interfaces = all
 virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 
@@ -689,14 +690,16 @@ mydestination = $mydomain, localhost
 relay_domains =
 virtual_mailbox_domains = {{ database_type }}:/etc/postfix/sql-domains.cf
 virtual_alias_domains = {{ database_type }}:/etc/postfix/sql-domain-aliases.cf
-virtual_alias_maps = {{ database_type }}:/etc/postfix/sql-aliases.cf,
-      {{ database_type }}:/etc/postfix/sql-domain-aliases-mailboxes.cf,
-      {{ database_type }}:/etc/postfix/sql-catchall-aliases.cf
+transport_maps = {{ database_type }}:/etc/postfix/sql-autoreplies-transport.cf
+virtual_alias_maps = {{ database_type }}:/etc/postfix/sql-aliases.cf
+        {{ database_type }}:/etc/postfix/sql-domain-aliases-mailboxes.cf,
+        {{ database_type }}:/etc/postfix/sql-autoreplies.cf,
+        {{ database_type }}:/etc/postfix/sql-catchall-aliases.cf
 
 smtpd_recipient_restrictions =
         check_recipient_access {{ database_type }}:/etc/postfix/sql-maintain.cf
-        permit_mynetworks
         permit_sasl_authenticated
+        permit_mynetworks
         reject_unauth_destination
 
 smtpd_sender_restrictions =
