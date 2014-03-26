@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: firewall, ports_to_open: [80] }

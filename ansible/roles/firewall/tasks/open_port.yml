@@ -1,0 +1,10 @@
+---
+-
+  name: check port {{ ports_to_open }}
+  shell: "bash /mnt/ansible/scripts/firewall_add_port.sh {{ item }}"
+  with_items: ports_to_open
+  # ignore_errors: True
+
+-
+  name: save table
+  command: service iptables save
