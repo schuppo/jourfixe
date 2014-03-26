@@ -1,0 +1,9 @@
+---
+  -
+    name: install sshfs
+    yum: name=sshfs state=present
+
+  -
+    name: mount folder
+    when: env != "local"
+    raw: sudo sshfs schuppo@`echo $SSH_CLIENT | awk '{ print $1}'`:"/Users/schuppo/Centos 6.5" /mnt -o uid=500 -o gid=500 -o allow_other

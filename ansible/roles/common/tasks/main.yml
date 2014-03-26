@@ -1,4 +1,5 @@
 ---
+- include: sshfs.yml
 # - include: basic.yml
 # - include: mysql.yml
 # - include: python.yml

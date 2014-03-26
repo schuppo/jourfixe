@@ -1,3 +1,3 @@
 NETWORKING=yes
-HOSTNAME=test.local
+HOSTNAME={{ ansible_hostname }}
 RES_OPTIONS="single-request-reopen"

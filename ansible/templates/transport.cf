@@ -1,7 +1,0 @@
-user={{ database_user }}
-password={{ database_password}}
-dbname={{ database_name }}
-table=transports
-select_field=transport
-where_field=domain
-hosts=localhost

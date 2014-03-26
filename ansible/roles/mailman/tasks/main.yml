@@ -1,0 +1,16 @@
+---
+-
+  name: install mailman
+  yum: name=mailman state=present
+-
+  name: fix permissions
+  shell: /usr/lib/mailman/bin/check_perms -f
+-
+  name: copy mailman config file
+  copy: src=mm_cfg.py
+        dest=/usr/lib/mailman/Mailman
+        owner=mailman group=mailman mode=0644
+
+# -
+#   name: set mailman site password
+#   shell: /usr/lib/mailman/bin/mmsitepass <<< $'test\ntest\n'

@@ -1,9 +1,0 @@
----
--
-  hosts: all
-  sudo: True
-  tasks:
-  -
-    name: rsync
-    # synchronize: delete=yes dest=./ src=/vagrant
-    command: 'rsync -av --delete -e ssh schuppo@92.195.102.129:"/Users/schuppo/Centos\ 6.5/ansible" test'
