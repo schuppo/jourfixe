@@ -20,9 +20,7 @@
 
 -
   name: copy apache's main configuration file
-  tags: apache_config
   template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
-  register: apache
   notify: restart apache
 
 -
@@ -30,3 +28,5 @@
   when: env == 'local'
   copy: src=nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
   notify: restart apache
+- debug: msg=register apache variable
+  register: apache

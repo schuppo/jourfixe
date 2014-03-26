@@ -1,0 +1,9 @@
+---
+-
+  name: check if directory already exists
+  file: path=/var/www/iredmail state=directory
+  register: iredmail_dir_exists
+- name: download iredmail
+  when: iredmail_dir_exists.stats.isdir == false
+  shell:    wget https://bitbucket.org/zhb/iredmail/downloads/iRedMail-0.8.6.tar.bz2
+            chdir=/home/{{ ansible_ssh_user }}

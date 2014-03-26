@@ -12,16 +12,8 @@
 
 -
   name: copy wsgi.py template
-  tags:
-    - modoboa_install
-    - wsgi.py
   template: src=wsgi.py dest=/var/www/{{ modoboa_name }}/{{ modoboa_name }}/
--
-  name: copy modoboa-server.conf
-  tags: modoboa-server.conf
-  template: src=modoboa-server.conf
-            dest=/etc/httpd/conf.d/virtual_hosts
-  notify: restart apache
+
 -
   name: add modoboa to postfix's cronjobs
   command: bash /mnt/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }}

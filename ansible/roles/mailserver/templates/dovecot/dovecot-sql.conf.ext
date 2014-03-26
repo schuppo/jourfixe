@@ -1,6 +1,6 @@
 driver = mysql
 
-connect = host=localhost dbname={{ database_name }} user={{ database_user }} password={{ database_password }}
+connect = host=localhost dbname={{ database_name }} user={{ database_user }} password={{ database_password | default('test') }}
 
 default_pass_scheme = CRYPT
 

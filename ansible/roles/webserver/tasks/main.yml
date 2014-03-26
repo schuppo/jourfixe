@@ -5,3 +5,5 @@
   when: php_is_installed is not defined
 - include: install_modules.yml
   when: modules is defined
+- include: add_virtual_server.yml
+  when: virtual_server is defined
