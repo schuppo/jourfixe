@@ -1,0 +1,11 @@
+---
+-
+  name: ensure that iptables starts at boot time
+  command: chkconfig --level 345 iptables on
+
+-
+  name: define basic firewall table
+  when: set_firewall_table is defined and firewall_base_table_is_set is undefined
+  command: bash /mnt/ansible/scripts/firewall_basic.sh
+  register: firewall_base_table_is_set
+  notify: restart iptables

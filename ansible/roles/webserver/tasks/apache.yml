@@ -1,19 +1,5 @@
 ---
 -
-  name: remove port 80 entry
-  tags: port
-  lineinfile: dest=/etc/sysconfig/iptables
-              regexp='--dport\ 80'
-              state=absent
--
-  name: insert port 80 entry
-  tags: port
-  lineinfile: dest=/etc/sysconfig/iptables
-            line='-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT'
-            insertbefore='-A INPUT -i lo -j ACCEPT'
-            state=present
-  notify: restart iptables
--
   name: install apache if not present
   yum: name=httpd state=present
 
@@ -31,9 +17,9 @@
         state=directory
         owner=apache
         group=apache
+
 -
   name: copy apache's main configuration file
-  tags: apache_config
   template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
   notify: restart apache
 
@@ -42,4 +28,5 @@
   when: env == 'local'
   copy: src=nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
   notify: restart apache
-- include: php.yml
+- debug: msg=register apache variable
+  register: apache

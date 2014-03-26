@@ -1,4 +1,5 @@
  # # Add repos at webtatic
+  - debug: var=php_is_installed
   -
     name: Add webtatic keys
     rpm_key: state=present key=http://repo.webtatic.com/yum/RPM-GPG-KEY-webtatic-andy
@@ -11,6 +12,7 @@
   -
     copy: src=webtatic.repo
           dest=/etc/yum.repos.d/
+
   -
     name: install PHP55 packages
     yum: name={{ item }} state=present
@@ -22,6 +24,7 @@
 
   -
     file: path=/etc/php/conf.d state=directory
+    register: php_is_installed
 
   -
     copy: src=php-site.ini dest=/etc/php/conf.d/php-site.ini

@@ -1,0 +1,5 @@
+---
+-
+  name: download {{ pip }} with pip
+  command:  pip install {{ item }}
+  with_items: pip

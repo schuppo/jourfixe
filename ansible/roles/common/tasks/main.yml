@@ -2,8 +2,7 @@
 # - include: basic.yml
 # - include: mysql.yml
 # - include: python.yml
-- include: postfix.yml
-# - include: apache.yml
-- include: modoboa.yml
+# - include: postfix.yml
+# - include: modoboa.yml
 # - include: amavis.yml
 

@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: webserver, modules: [ mod_wsgi ], virtual_server: modoboa }
+  - { role: python, pip: [ modoboa ] }
