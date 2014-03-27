@@ -1,5 +1,5 @@
 [local]
-mail ansible_ssh_user=vagrant environment=local database_root_password=
+mail.fritz.box ansible_ssh_user=vagrant environment=local database_root_password=
 
 [production]
 jourfixe

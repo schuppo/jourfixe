@@ -100,3 +100,5 @@ add_virtualhost(DEFAULT_URL_HOST, DEFAULT_EMAIL_HOST)
 # didn't find it above, it's probably in Defaults.py.
 # [ADDED]
 MTA = 'Postfix'
+POSTFIX_STYLE_VIRTUAL_DOMAINS = [{{ ansible_hostname }}]
+VIRTUAL_MAILMAN_LOCAL_DOMAIN = 'localhost'
