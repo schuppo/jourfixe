@@ -32,6 +32,7 @@
   with_items:
     - main
     - master
+    - "sql-username"
 
 -
   name: copy dovecot files
@@ -77,13 +78,6 @@
   name: create postfix mysql database
   mysql_db: name={{ database_name }} state=present
 
-# -
-#   name: remove old mysql user
-#   mysql_user: name={{ database_user }}
-#               login_user={{ database_root }}
-#               login_password= {{ database_root_password }}
-#               state=absent
-
 -
   name: create mysql user
   mysql_user: name={{ database_user }}
@@ -93,7 +87,7 @@
               login_user={{ database_root }}
               login_password= {{ database_root_password }}
   with_items:
-    - "{{ ansible_hostname }}"
+    - "{{ ansible_fqdn }}"
     - 127.0.0.1
     - ::1
     - localhost

@@ -72,7 +72,7 @@ mail_owner = postfix
 # from gethostname(). $myhostname is used as a default value for many
 # other configuration parameters.
 #
-myhostname = {{ ansible_hostname }}
+myhostname = {{ ansible_fqdn }}
 #myhostname = virtual.domain.tld
 
 # The mydomain parameter specifies the local internet domain name.
@@ -702,10 +702,12 @@ smtpd_recipient_restrictions =
         permit_mynetworks
         reject_unauth_destination
 
-smtpd_sender_restrictions =
-        reject_authenticated_sender_login_mismatch
-        reject_unknown_sender_domain
+#smtpd_sender_restrictions =
+#        reject_authenticated_sender_login_mismatch
+#        reject_unknown_sender_domain
 
+smtpd_sender_maps =
+        {{ database_type }}:/etc/postfix/sql-username.cf
 
 # a bit more spam protection
 disable_vrfy_command = yes
@@ -717,5 +719,3 @@ smtpd_sasl_path=private/auth
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_authenticated_header = yes
 broken_sasl_auth_clients = yes
-
-# proxy_read_maps = $local_recipient_maps $mydestination $virtual_alias_maps $virtual_alias_domains $virtual_mailbox_maps $virtual_mailbox_domains $relay_recipient_maps $relay_domains $canonical_maps $sender_canonical_maps $recipient_canonical_maps $relocated_maps $transport_maps $mynetworks $smtpd_sender_login_maps

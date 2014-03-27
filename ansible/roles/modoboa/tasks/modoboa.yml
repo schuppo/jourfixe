@@ -35,6 +35,11 @@
   tags: cron
   command: bash /mnt/ansible/scripts/add_modoboa_cron_jobs.sh {{ modoboa_name }} {{ mailbox_owner }}
   notify: restart crond
+
+-
+ name: pause for user input
+ pause: prompt="modoboa-admin.py postfix_maps --dbtype mysql /etc/postfix"
+
 # -
 #   name: check if sql-domains.cf exists
 #   stat: path=/etc/postfix/sql-domains.cf

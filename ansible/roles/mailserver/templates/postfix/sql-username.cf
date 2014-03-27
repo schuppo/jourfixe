@@ -1,0 +1,6 @@
+user = {{ database_user }}
+password = {{ database_password | default('test') }}
+dbname = {{ modoboa_name }}
+hosts = localhost
+
+SELECT username FROM core_user WHERE email='%s' AND is_active=1

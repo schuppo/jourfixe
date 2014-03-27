@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: webserver, virtual_server: mailman, config_file_path: ../../mailman/files/ }
+  - { role: webserver, virtual_server: _mailman, config_file_path: ../../mailman/files/ }

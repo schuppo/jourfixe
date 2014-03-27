@@ -12,9 +12,6 @@
   name: add clam user to amavis group
   command: gpasswd -a clam amavis
 
-# -
-#   name: set start level for spamassassin
-#   command: chkconfig --level 2345 spamassassin
 -
   name: start amavisd, spamassassin and clamd.amavisd as service
   service: name={{ item }} state=started enabled=yes
@@ -30,7 +27,7 @@
               login_user=root
               login_password=
   with_items:
-    - "{{ ansible_hostname }}"
+    - "{{ ansible_fqdn }}"
     - 127.0.0.1
     - ::1
     - localhost
