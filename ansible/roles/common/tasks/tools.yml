@@ -1,6 +1,7 @@
 ---
 -
   name: install tools
+  sudo: True
   yum: name={{ item }} state=present
   with_items:
       - rubygems

@@ -3,7 +3,7 @@
 -
   name: get .dotfiles from github repo
   git:  repo=https://github.com/schuppo/dotfiles.git
-        dest={{ dotfiles_dest | default('/root') }}/.dotfiles #accept_hostkey=yes #added in ansible 1.5
+        dest={{ dotfiles_dest | default('/root') }}/.dotfiles accept_hostkey=yes #added in ansible 1.5
   ignore_errors: True
   sudo: False
 -

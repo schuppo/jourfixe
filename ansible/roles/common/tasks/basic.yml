@@ -1,6 +1,6 @@
 ---
-# - include: tools.yml
-# - include: iptables.yml
+- include: tools.yml
+- include: iptables.yml
 - include: dotfiles.yml user={{ ansible_ssh_user }} dotfiles_dest=/home/{{ ansible_ssh_user }}
 - include: ntp.yml
 -
