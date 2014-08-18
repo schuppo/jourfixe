@@ -1,9 +1,0 @@
----
--
-  hosts: vagrant
-  sudo: False
-  remote_user: vagrant
-  tasks:
-    - include: tasks/dotfiles.yml
-  handlers:
-    - include: handlers/handlers.yml
