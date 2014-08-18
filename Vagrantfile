@@ -23,8 +23,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         config.vm.synced_folder "./", "/mnt", :mount_options => ['dmode=777', 'fmode=666'] #, :nfs=>true
 
-        # config.vm.network :private_network, ip: "10.10.10.10"
-        config.vm.network "public_network", :bridge => 'en1: WLAN (AirPort)'
+        # config.vm.network :private_network, ip: "192.168.178.54", auto_config: false
+        config.vm.network "public_network", ip: "192.168.178.54", :bridge => 'en1: WLAN (AirPort)'
 
         # forward to port 8888
         config.vm.network "forwarded_port", guest: 80, host: 8888
