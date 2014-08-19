@@ -1,6 +1,7 @@
 ---
 - include: tools.yml
-- include: dotfiles.yml user={{ ansible_ssh_user }} dotfiles_dest=/home/{{ ansible_ssh_user }}
+# crashes host system
+# - include: dotfiles.yml user={{ ansible_ssh_user }} dotfiles_dest=/home/{{ ansible_ssh_user }}
 -
   name: customize clock
   lineinfile: dest=/etc/sysconfig/clock
