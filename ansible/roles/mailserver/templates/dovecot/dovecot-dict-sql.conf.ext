@@ -1,0 +1,14 @@
+connect = host=localhost dbname={{ database_name }} user={{ database_user }} password={{ database_password | default('test') }}
+
+map {
+  pattern = priv/quota/storage
+  table = admin_quota
+  username_field = username
+  value_field = bytes
+}
+map {
+  pattern = priv/quota/messages
+  table = admin_quota
+  username_field = username
+  value_field = messages
+}

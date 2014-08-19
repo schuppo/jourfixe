@@ -1,7 +1,0 @@
-user={{ database_user }}
-password={{ database_password}}
-dbname={{ database_name }}
-table=users
-select_field=maildir
-where_field=email
-hosts=localhost

@@ -1,0 +1,7 @@
+---
+-
+  name: copy {{ config_file_path | default('') }}{{virtual_server}}.conf
+  tags: modoboa-server.conf
+  template: src={{ config_file_path | default('') }}{{virtual_server}}.conf
+            dest=/etc/httpd/conf.d/virtual_hosts
+  notify: restart apache

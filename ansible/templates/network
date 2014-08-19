@@ -1,3 +1,0 @@
-NETWORKING=yes
-HOSTNAME=test.local
-RES_OPTIONS="single-request-reopen"

@@ -6,12 +6,14 @@
   remote_user: vagrant
   vars:
     env: local
-  vars_prompt:
-    -
-      name: database_password
-      prompt: "Database password"
-      private: yes
+  # vars_prompt:
+  #   -
+  #     name: database_password
+  #     prompt: "Database password"
+  #     private: yes
   roles:
     - common
+    - webserver
+    - mailserver
     # - local
 

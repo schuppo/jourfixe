@@ -1,0 +1,32 @@
+---
+-
+  name: install apache if not present
+  yum: name=httpd state=present
+
+-
+  name: make sure apache is running
+  service: name=httpd state=started enabled=true
+
+-
+  name: check if virtual_hosts directory exists
+  file: path=/etc/httpd/conf.d/virtual_hosts state=directory
+
+-
+  name: create /var/www/sites
+  file: path=/var/www/sites
+        state=directory
+        owner=apache
+        group=apache
+
+-
+  name: copy apache's main configuration file
+  template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+  notify: restart apache
+
+-
+  name: copy nosendfile.conf
+  when: env == 'local'
+  copy: src=nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
+  notify: restart apache
+- debug: msg=register apache variable
+  register: apache

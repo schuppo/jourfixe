@@ -1,0 +1,9 @@
+---
+dependencies:
+  - { role: webserver }
+  - { role: firewall, ports_to_open: [ 587, 993 ] }
+  - { role: databaseserver }
+  - { role: modoboa }
+  - { role: ntpserver }
+  - { role: mailman }
+  # - { role: postfix }

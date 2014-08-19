@@ -1,0 +1,9 @@
+---
+-
+  name: install {{ modules }}
+  yum: name={{ item }} state=present
+  with_items: modules
+
+-
+  name: copy {{ modules }}.conf
+  copy: src=wsgi.conf dest=/etc/httpd/conf.d/
