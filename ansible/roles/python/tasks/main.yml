@@ -1,5 +1,6 @@
 ---
+- include: python.yml
 -
   name: download {{ pip }} with pip
-  command:  pip install {{ item }}
+  pip: name={{ item }}
   with_items: pip

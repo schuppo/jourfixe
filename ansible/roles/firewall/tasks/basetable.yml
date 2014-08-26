@@ -5,7 +5,7 @@
 
 -
   name: define basic firewall table
-  when: set_firewall_table != "no"
+  when: firewall_table_is_set is not defined
   command: bash /mnt/ansible/scripts/firewall_basic.sh
   notify: restart iptables
-  register: set_firewall_table="no"
+  register: firewall_table_is_set="yes"
