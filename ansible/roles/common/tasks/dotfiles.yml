@@ -1,16 +1,20 @@
 ---
 - debug: var=dotfiles_dest
 -
+  name: clear .dotfiles
+  command: rm -rf /home/{{ansible_ssh_user}}/.dotfiles
+  sudo: True
+-
   name: get .dotfiles from github repo
   git:  repo=https://github.com/schuppo/dotfiles.git
-        dest={{ dotfiles_dest | default('/root') }}/.dotfiles accept_hostkey=yes #added in ansible 1.5
-  sudo: False
+        dest={{ dotfiles_dest | default('/root') }}/.dotfiles  #added in ansible 1.5
+  sudo: True
 -
   name: change ownership of .dotfiles directory
   file: path=/home/vagrant/.dotfiles
         state=directory
-        owner={{ user | default('root') }}
-        group={{ usern | default('root') }}
+        owner={{ ansible_ssh_user | default('root') }}
+        group={{ ansible_ssh_user | default('root') }}
         recurse=true
   sudo: True
 -
