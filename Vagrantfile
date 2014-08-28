@@ -26,9 +26,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # config.vm.network :private_network, ip: "192.168.178.54", auto_config: false
         config.vm.network "public_network", ip: "192.168.178.54", :bridge => 'en1: WLAN (AirPort)'
 
-        # forward to port 8888
-        config.vm.network "forwarded_port", guest: 80, host: 8888
-
         config.vm.provision :shell, :path => "provision.sh"
     end
 end

@@ -1,0 +1,11 @@
+---
+-
+  name: local
+  hosts: local
+  sudo: True
+  remote_user: vagrant
+  vars:
+    env: local
+  roles:
+    - mailman
+

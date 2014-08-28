@@ -4,12 +4,16 @@
   yum: name=mailman state=present
 -
   name: copy mailman config file
+  sudo: True
   template: src=mm_cfg.py
         dest=/usr/lib/mailman/Mailman
-        owner=mailman group=mailman mode=0644
+        owner=root group=mailman mode=0644
 -
   name: fix permissions
+  sudo: True
   shell: /usr/lib/mailman/bin/check_perms -f
 -
-  name: pause for user input in destination machine
-  pause: prompt="/usr/lib/mailman/bin/mmsitepass"
+  name: login remote machine and type: sudo /usr/lib/mailman/bin/mmsitepass
+  pause: prompt="login remote machine and type: sudo /usr/lib/mailman/bin/mmsitepass"
+-
+
