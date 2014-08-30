@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-    config.vm.box = "chef/centos-6.5"
+    config.vm.box = "hashicorp/precise64"
     config.vm.define :site do |config|
         config.vm.provider :virtualbox do |v|
             # set memory to > 1GB
