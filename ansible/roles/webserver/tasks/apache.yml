@@ -1,32 +1,33 @@
 ---
 -
+  name: add repo
+  apt_repository: repo=ppa:ondrej/php5
+
+-
   name: install apache if not present
-  yum: name=httpd state=present
+  apt: name=apache2 state=present
 
 -
   name: make sure apache is running
-  service: name=httpd state=started enabled=true
+  service: name=apache2 state=started enabled=true
+
+# -
+#   name: create /var/www/sites
+#   file: path=/var/www/sites
+#         state=directory
+#         owner=apache
+#         group=apache
+
+# -
+#   name: copy apache's main configuration file
+#   template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+#   notify: restart apache
 
 -
-  name: check if virtual_hosts directory exists
-  file: path=/etc/httpd/conf.d/virtual_hosts state=directory
-
--
-  name: create /var/www/sites
-  file: path=/var/www/sites
-        state=directory
-        owner=apache
-        group=apache
-
--
-  name: copy apache's main configuration file
-  template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
-  notify: restart apache
-
--
-  name: copy nosendfile.conf
+  name: EnableSendFile off in apache.conf
   when: env == 'local'
-  copy: src=nosendfile.conf dest=/etc/httpd/conf.d/nosendfile.conf
+  lineinfile: line="EnableSendfile off"
+              dest=/etc/apache2/apache2.conf
   notify: restart apache
 - debug: msg=register apache variable
   register: apache

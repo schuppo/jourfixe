@@ -1,11 +1,21 @@
 ---
 -
-  name: ensure that iptables starts at boot time
-  command: chkconfig --level 345 iptables on
+  name: check if repo dir exists
+  file: path=/home/{{ansible_ssh_user}}/repos state=directory
+-
+  name: get firehol
+  git:  repo=https://github.com/ktsaou/firehol
+        dest=/home/{{ansible_ssh_user}}/repos/firehol
 
 -
-  name: define basic firewall table
-  when: firewall_table_is_set is not defined
-  command: bash /mnt/ansible/scripts/firewall_basic.sh
-  notify: restart iptables
-  register: firewall_table_is_set="yes"
+  name: install firehol
+  command: cp /home/{{ansible_ssh_user}}/repos/firehol/sbin/firehol.in /sbin/firehol.in
+
+-
+  name: copy firehol.conf to /etc/init for upstart to load at boot time
+  copy: src=firehol.conf
+        dest=/etc/init/firehol.conf
+        force=no
+        owner=root
+        group=root
+        mode=600

@@ -2,7 +2,7 @@
 -
   name: install tools
   sudo: True
-  yum: name={{ item }} state=present
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
       - rubygems
       - git-core
@@ -11,3 +11,4 @@
       - vim
       - zsh
       - ctags
+      - bzip2

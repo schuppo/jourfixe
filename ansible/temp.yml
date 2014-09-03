@@ -7,5 +7,6 @@
   vars:
     env: local
   roles:
-    - mailman
+    - common
+    - webserver
 

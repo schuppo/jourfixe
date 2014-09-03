@@ -1,4 +1,4 @@
 ---
-- include: sshfs.yml
+#- include: sshfs.yml
 - include: basic.yml
 
