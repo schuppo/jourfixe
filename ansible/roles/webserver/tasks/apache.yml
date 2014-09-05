@@ -15,8 +15,8 @@
 #   name: create /var/www/sites
 #   file: path=/var/www/sites
 #         state=directory
-#         owner=apache
-#         group=apache
+#         owner=root
+#         group=root
 
 # -
 #   name: copy apache's main configuration file

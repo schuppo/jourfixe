@@ -6,7 +6,8 @@
   remote_user: vagrant
   vars:
     env: local
+    jourfixe_net: local.jourfixe
   roles:
-    - common
+    # common
     - webserver
 

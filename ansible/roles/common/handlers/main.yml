@@ -1,7 +1,7 @@
 ---
 -
   name: restart apache
-  service: name=httpd state=restarted
+  service: name=apache2 state=restarted
 -
   name: restart mysqld
   service: name=mysqld state=restarted

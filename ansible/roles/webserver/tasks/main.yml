@@ -3,6 +3,7 @@
   when: php_is_installed is not defined
 - include: apache.yml
   when: apache is not defined
+- include: add_jourfixe.yml
 # - include: install_modules.yml
 #   when: modules is defined
 # - include: add_virtual_server.yml

@@ -1,0 +1,12 @@
+-
+  name: add repo
+  apt_repository: repo='deb http://download.virtualbox.org/virtualbox/debian precise contrib' state=present
+-
+  name: install virtualbox
+  apt: name={{item}}
+  with_items:
+    - virtualbox-4.3
+
+-
+  name: download vagrant
+  url_get: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.3_x86_64.deb dest=/home/{{ansible_ssh_user}}/downloads/vagrant.deb

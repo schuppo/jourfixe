@@ -1,0 +1,23 @@
+---
+-
+  name: add repo
+  apt_repository: repo=ppa:ondrej/php5
+-
+  name: check if downloads directory already exists
+  sudo: False
+  file: path=/home/{{ansible_ssh_user}}/downloads state=directory
+  register: downloads_dir_exists
+-
+  name: download src
+  sudo: False
+  get_url: url=https://bitbucket.org/zhb/iredmail/downloads/iRedMail-0.8.7.tar.bz2 dest=/home/{{ansible_ssh_user}}/downloads/iRedMail-0.8.7.tar.bz2
+-
+  name: unarchive
+  sudo: False
+  unarchive: copy=no src=/home/{{ansible_ssh_user}}/downloads/iRedMail-0.8.7.tar.bz2 creates=no dest=/home/{{ansible_ssh_user}}/downloads
+-
+  name: install
+  pause: prompt="sudo bash ~/downloads/iRedMail-0.8.7/iRedMail.sh"
+# -
+#   name: uninstall php5.3
+#   apt: name=php5-common state=absent

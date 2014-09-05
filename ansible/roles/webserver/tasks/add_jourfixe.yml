@@ -1,0 +1,9 @@
+---
+-
+  name: add jourfixe conf
+  template: src=001-jourfixe.net.conf dest=/etc/apache2/sites-available
+-
+  name: activate jourfixe
+  command: ln -s /etc/apache2/sites-available/001-jourfixe.net.conf /etc/apache2/sites-enabled/001-jourfixe.net.conf
+  ignore_errors: True
+  notify: restart apache
